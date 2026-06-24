@@ -2,7 +2,7 @@
 
 Welcome! This mod doesn't just backport the Nether Reactor Core to Java Edition, but for alpha 1.1.2_01 versions, the fishing rod is given its functionality :D.
 
-This mod is also compatible with my other mod (ooneys Alpha Patches), to set it up, make sure that the ooneys Alpha Patches mod is added to the minecraft.jar before this mod.
+This mod is also compatible with my other mod (ooneys Alpha Patches) (ONLY UP TO VERSION 1.7.6_02a), to set it up, make sure that the ooneys Alpha Patches mod is added to the minecraft.jar before this mod.
 
 If you are curious on what the Nether Reactor Core is, feel free to check [minecraft.wiki](https://minecraft.wiki/w/Nether_Reactor_Core).
 
