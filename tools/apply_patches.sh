@@ -1,24 +1,26 @@
 #!/bin/bash
-set e
-echo "Resetting source code to vanilla"
+set -e
 
-if [ -d "../clean_src/net.minecraft" ]; then
-  mkdir -p ../src/net.minecraft
-  rsync -a --delete ../clean_src/net.minecraft/ ../src/net.minecraft/
+# 1. Calculate paths using the terminal's location
+TOOLS_DIR=$(pwd)
+PROJECT_ROOT=$(cd "$TOOLS_DIR/.." && pwd)
+
+echo "🧹 Resetting Minecraft source code to clean vanilla..."
+
+# 2. Overwrite only the matching track trees to shield your root image assets
+if [ -d "$PROJECT_ROOT/clean_src/net.minecraft" ]; then
+    mkdir -p "$PROJECT_ROOT/src/net.minecraft"
+    rsync -a --delete "$PROJECT_ROOT/clean_src/net.minecraft/" "$PROJECT_ROOT/src/net.minecraft/"
 else
-  echo "Error: clean_src/net.minecraft not found."
-  exit 1
+    echo "❌ Error: clean_src reference folders not found!"
+    exit 1
 fi
 
-echo "Applying patches.."
-if [ -d "../patches" ] && [ "$(ls -A ../patches)" ]; then
-  for f in ../patches/*.patch; do
-    echo "Applying $f"
-    # Applies patch inside java dir tree
-    patch -p1 -d ../src < "$f"
-  done
-  echo "Code updated with patches."
+echo "🪵 Applying your mod patches..."
+if [ -f "$PROJECT_ROOT/patches/mod_changes.patch" ]; then
+    # Applies the patch relative directly to your active net.minecraft directory
+    patch -p1 -d "$PROJECT_ROOT/src/net.minecraft" < "$PROJECT_ROOT/patches/mod_changes.patch"
+    echo "✅ Minecraft code successfully updated with patches!"
 else
-  echo "No patches found. Code left vanilla."
+    echo "✅ No patch file found. Workspace left at clean vanilla."
 fi
-
